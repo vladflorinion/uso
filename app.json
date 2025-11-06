@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "MacroPulse Wellness Tracker",
+    "slug": "macropulse-wellness-tracker",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/icon.png",
+    "scheme": "macropulse",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./src/assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#08090c"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.macropulse.app"
+    },
+    "android": {
+      "package": "com.macropulse.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/adaptive-icon.png",
+        "backgroundColor": "#08090c"
+      },
+      "permissions": [
+        "VIBRATE"
+      ]
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-linear-gradient",
+      "expo-asset"
+    ]
+  }
+}
