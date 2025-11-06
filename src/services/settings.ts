@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from './supabase/client';
-import { UserSettings } from '@types/settings';
+import { UserSettings } from '@app-types/settings';
 import { useSettingsStore } from '@store/useSettingsStore';
 
 const SETTINGS_KEY = ['userSettings'];

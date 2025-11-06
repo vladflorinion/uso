@@ -31,7 +31,6 @@
     },
     "plugins": [
       "expo-secure-store",
-      "expo-linear-gradient",
       "expo-asset"
     ]
   }

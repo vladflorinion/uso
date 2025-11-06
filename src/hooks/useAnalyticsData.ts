@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { eachDayOfInterval, parseISO, subDays } from 'date-fns';
 
-import { DailyLog } from '@types/dailyLog';
+import { DailyLog } from '@app-types/dailyLog';
 import { useDailyLogsStore } from '@store/useDailyLogsStore';
 
 type Period = 7 | 14 | 30;

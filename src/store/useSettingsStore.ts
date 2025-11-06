@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
-import { persist, PersistOptions } from 'zustand/middleware';
-import { UserSettings } from '@types/settings';
+import type { StateCreator } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { UserSettings } from '@app-types/settings';
 
 const STORAGE_KEY = 'macropulse:userSettings';
 
@@ -26,21 +27,17 @@ type SettingsState = {
   setSettings: (next: UserSettings) => void;
 };
 
-type MyPersist = (
-  config: (set: any, get: any, api: any) => SettingsState,
-  options: PersistOptions<SettingsState>,
-) => (set: any, get: any, api: any) => SettingsState;
+type SettingsStoreCreator = StateCreator<SettingsState, [['zustand/persist', unknown]], [], SettingsState>;
 
-export const useSettingsStore = create<SettingsState>(
-  (persist as MyPersist)(
-    (set) => ({
-      settings: defaultSettings,
-      setSettings: (next) => set({ settings: next }),
-    }),
-    {
-      name: STORAGE_KEY,
-      getStorage: () => AsyncStorage,
-      partialize: (state) => ({ settings: state.settings }),
-    },
-  ),
+const createSettingsStore: SettingsStoreCreator = (set) => ({
+  settings: defaultSettings,
+  setSettings: (next) => set({ settings: next }),
+});
+
+export const useSettingsStore = create<SettingsState>()(
+  persist<SettingsState, [], [], Pick<SettingsState, 'settings'>>(createSettingsStore, {
+    name: STORAGE_KEY,
+    getStorage: () => AsyncStorage,
+    partialize: (state) => ({ settings: state.settings }),
+  }),
 );

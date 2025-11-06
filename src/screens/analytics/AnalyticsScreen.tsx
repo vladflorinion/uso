@@ -73,7 +73,9 @@ const AnalyticsScreen = () => {
               <VictoryAxis style={axisStyle} tickFormat={() => ''} />
               <VictoryAxis dependentAxis style={axisStyle} tickFormat={(t) => `${t}`} />
               <VictoryBar
-                style={{ data: { fill: '#5ED0FF', width: 12, cornerRadius: 6 } }}
+                barWidth={12}
+                cornerRadius={{ top: 6 }}
+                style={{ data: { fill: '#5ED0FF' } }}
                 data={analytics.dailySeries.map((item, index) => ({ x: index, y: item.water }))}
               />
             </VictoryChart>
@@ -89,7 +91,9 @@ const AnalyticsScreen = () => {
               <VictoryAxis style={axisStyle} tickFormat={() => ''} />
               <VictoryAxis dependentAxis style={axisStyle} tickFormat={(t) => `${t}`} />
               <VictoryBar
-                style={{ data: { fill: '#FFA64D', width: 12, cornerRadius: 6 } }}
+                barWidth={12}
+                cornerRadius={{ top: 6 }}
+                style={{ data: { fill: '#FFA64D' } }}
                 data={analytics.dailySeries.map((item, index) => ({ x: index, y: item.steps }))}
               />
             </VictoryChart>

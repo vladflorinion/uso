@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from './supabase/client';
-import { DailyLog } from '@types/dailyLog';
+import { DailyLog } from '@app-types/dailyLog';
 import { useDailyLogsStore } from '@store/useDailyLogsStore';
 import { useOffline } from './offline/OfflineContext';
 

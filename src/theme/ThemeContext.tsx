@@ -4,9 +4,11 @@ import { palette, gradients } from './colors';
 
 export type ThemeMode = 'dark' | 'light';
 
+type ThemePalette = { [K in keyof typeof palette]: string };
+
 type Theme = {
   mode: ThemeMode;
-  palette: typeof palette;
+  palette: ThemePalette;
   gradients: typeof gradients;
   toggleMode: () => void;
   surface: (variant?: 'base' | 'elevated') => {
@@ -24,8 +26,8 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
   const value = useMemo<Theme>(() => {
     const isDark = mode === 'dark';
-    const basePalette = isDark
-      ? palette
+    const basePalette: ThemePalette = isDark
+      ? { ...palette }
       : {
           ...palette,
           background: '#f5f7fb',

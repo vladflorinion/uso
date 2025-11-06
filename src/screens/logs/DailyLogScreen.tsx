@@ -17,7 +17,7 @@ import { useAuth } from '@services/auth/AuthContext';
 import { useDailyLogs, useDeleteDailyLog, useUpsertDailyLog } from '@services/dailyLogs';
 import { useUserSettings } from '@services/settings';
 import { useDailyLogsStore } from '@store/useDailyLogsStore';
-import { DailyLog } from '@types/dailyLog';
+import { DailyLog } from '@app-types/dailyLog';
 import { RootStackParamList } from '@navigation/RootNavigator';
 
 const emptyLog = (date: string): DailyLog => ({
@@ -169,7 +169,6 @@ const DailyLogScreen = () => {
               monthTextColor: palette.textPrimary,
               arrowColor: palette.accentPrimary,
             }}
-            markingType="simple"
             markedDates={markedDates}
             maxDate={today}
             onDayPress={(day) => setSelectedDate(day.dateString)}

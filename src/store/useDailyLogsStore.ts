@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
-import { persist, PersistOptions } from 'zustand/middleware';
-import { DailyLog } from '@types/dailyLog';
+import type { StateCreator } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { DailyLog } from '@app-types/dailyLog';
 
 const STORAGE_KEY = 'macropulse:dailyLogs';
 
@@ -12,39 +13,35 @@ type DailyLogState = {
   hydrate: (logs: DailyLog[]) => void;
 };
 
-type MyPersist = (
-  config: (set: any, get: any, api: any) => DailyLogState,
-  options: PersistOptions<DailyLogState>,
-) => (set: any, get: any, api: any) => DailyLogState;
+type DailyLogsStoreCreator = StateCreator<DailyLogState, [['zustand/persist', unknown]], [], DailyLogState>;
 
-export const useDailyLogsStore = create<DailyLogState>(
-  (persist as MyPersist)(
-    (set) => ({
-      logs: {},
-      setLog: (log) =>
-        set((state) => ({
-          logs: {
-            ...state.logs,
-            [log.date]: log,
-          },
-        })),
-      removeLog: (date) =>
-        set((state) => {
-          const next = { ...state.logs };
-          delete next[date];
-          return { logs: next };
-        }),
-      hydrate: (logs) =>
-        set(() => ({
-          logs: logs.reduce<Record<string, DailyLog>>((acc, curr) => {
-            acc[curr.date] = curr;
-            return acc;
-          }, {}),
-        })),
+const createDailyLogsStore: DailyLogsStoreCreator = (set) => ({
+  logs: {},
+  setLog: (log) =>
+    set((state) => ({
+      logs: {
+        ...state.logs,
+        [log.date]: log,
+      },
+    })),
+  removeLog: (date) =>
+    set((state) => {
+      const next = { ...state.logs };
+      delete next[date];
+      return { logs: next };
     }),
-    {
-      name: STORAGE_KEY,
-      getStorage: () => AsyncStorage,
-    },
-  ),
+  hydrate: (logs) =>
+    set(() => ({
+      logs: logs.reduce<Record<string, DailyLog>>((acc, curr) => {
+        acc[curr.date] = curr;
+        return acc;
+      }, {}),
+    })),
+});
+
+export const useDailyLogsStore = create<DailyLogState>()(
+  persist(createDailyLogsStore, {
+    name: STORAGE_KEY,
+    getStorage: () => AsyncStorage,
+  }),
 );

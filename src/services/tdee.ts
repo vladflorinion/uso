@@ -1,5 +1,5 @@
 import { differenceInDays, parseISO } from 'date-fns';
-import { DailyLog } from '@types/dailyLog';
+import { DailyLog } from '@app-types/dailyLog';
 
 export type TdeeResult = {
   tdee: number;
